@@ -1,31 +1,32 @@
 clear;close all;clc;
 
+% path to .dll & .lib
 addpath('C:\Program Files\Signal Hound\Spike\api\bb_series\x86');
+% path to header
 addpath('C:\Program Files\Signal Hound\Spike\api\bb_series');
 
+% Check if Library Loaded
 if (libisloaded('bb_api' )== 0)
     loadlibrary('bb_api','bb_api.h')
 end
 
+% Open Device - .Value is device number - used in every function
 device_ptr=libpointer('int32Ptr',0);
-%device_ptr=int32(0);
-connect_msg=calllib('bb_api','bbOpenDevice',device_ptr);
+connect_msg(1,:)=calllib('bb_api','bbOpenDevice',device_ptr);
 
-%********************CONFIGURATIONs SETTING********************************
+%********************CONFIGURATIONS SETTING********************************
 % See bb_api.h for configuration values
 
-BB_MIN_AND_MAX=uint32(zeros(1,1));
-BB_LOG_SCALE=uint32(zeros(1,1));
 %  bbConfigureAcquisition() & Configuring the detector and linear/log scaling
+BB_MIN_AND_MAX=uint32(0);
+BB_LOG_SCALE=uint32(0);
 settings(1,:)=calllib('bb_api','bbConfigureAcquisition',device_ptr.Value,BB_MIN_AND_MAX,BB_LOG_SCALE);
 
 % bbConfigureCenterSpan() – Configuring the frequency range
-% start=float(20e6); %Hz
-% stop=float(1e9); %Hz
-%span=start-stop;
-%center=span/2+start;
-center=double(510e6); %Hz
-span=double(980e6); %Hz
+start=20e6; %Hz
+stop=1e9; %Hz
+center=double((stop-start)/2+start); %Hz
+span=double(stop-start); %Hz
 settings(2,:)=calllib('bb_api','bbConfigureCenterSpan',device_ptr.Value,center,span);
 
 %  bbConfigureLevel() – Configuring reference level and internal attenuators
@@ -34,7 +35,7 @@ atten=double(-1);%if negative the attenuation is auto ??????????????????????????
 settings(3,:)=calllib('bb_api','bbConfigureLevel',device_ptr.Value,ref,atten);
 
 % bbConfigureGain() – Configuring internal amplifiers
-BB_AUTO_GAIN=int32(-1); %-1 is auto
+BB_AUTO_GAIN=int32(-1); %??????????????????????????????????????????????????
 settings(4,:)=calllib('bb_api','bbConfigureGain',device_ptr.Value,BB_AUTO_GAIN);
 
 %  bbConfigureSweepCoupling() – Configuring RBW/VBW/sweep time
@@ -51,23 +52,19 @@ settings(6,:)=calllib('bb_api','bbConfigureWindow',device_ptr.Value,BB_FLAT_TOP)
 
 % %  bbConfigureProcUnits()– Configure VBW processing
 BB_POWER=uint32(2); %????????????????????????????????????
-settings(7,:)=calllib('bb_api','bbConfigureProcUnits',device_ptr.Value,BB_POWER);
+BB_LOG=unit32(0);
+settings(7,:)=calllib('bb_api','bbConfigureProcUnits',device_ptr.Value,BB_LOG);
 %*************************************************************************
 
-
-
 %*********************Initialize DEVICE - SWEEPING MODE *******************
-BB_SWEEPING=uint32(0);
-flag=uint32(0); % this can be use to time stamp data with external GPS
+% This function may be used to calibrate device to it current temperature.
+BB_SWEEPING=uint32(0); % aquisition mode
+flag=uint32(0); 
 state=calllib('bb_api','bbInitiate',device_ptr.Value,BB_SWEEPING,flag);
 %**************************************************************************
 
 % bbQueryTraceInfo() - 
-dummy=0;
-traceLen_ptr=libpointer('uint32Ptr',0);
-%traceLen=uint32(dummy);
-binSize_ptr=libpointer('doublePtr',0);
-%binSize=double(dummy);
-start_ptr=libpointer('doublePtr',0);
-
+traceLen_ptr=libpointer('uint32Ptr',0); % # of frequency bins
+binSize_ptr=libpointer('doublePtr',0); % ??????????????????????????????????
+start_ptr=libpointer('doublePtr',0);% ?????????????????????????????????????
 query=calllib('bb_api','bbQueryTraceInfo',device_ptr.Value,traceLen_ptr,binSize_ptr,start_ptr);
