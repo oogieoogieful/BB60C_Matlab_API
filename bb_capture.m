@@ -1,3 +1,4 @@
+bb_open;
 minutes_sample = 1;
 minutes_capture = 120;
 minutes_run = 720;
@@ -27,3 +28,4 @@ while toc(elapsed_time_capture) < minutes_capture * 60
     save(strrep(num2str(sample_time(1,11:19)),':',''), 'comp_mat','sample_time');
 end
 end
+bb_close;
