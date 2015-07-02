@@ -25,7 +25,8 @@ Configuration Settings for Sweeping Mode:
 		window			flat top (b/c Non-native chosen)
 		vbw units		Power - need to be tested in Log
 ********************************************************************************		
+
 Data Description:
-	Frequencies Span from 20 MHz - 1GHz with 401408 frequency bins,
-	Accordingly, every power measurement or calculation has same dimension.
+	Frequencies Span from 20 MHz - 1GHz with 401408 frequency bins:
+	Accordingly, every power measurement or calculation number of columns.
 	
