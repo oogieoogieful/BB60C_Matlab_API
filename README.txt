@@ -10,13 +10,13 @@ Equipment: (See equipment_schematic.PNG)
 	
 Configuration Settings for Sweeping Mode:
 		traces	 		Min & Max
-		power scaling 	Log Scale
+		power scaling 		Log Scale
 		Center			510 MHz
 		Span 			980 MHz
 		reference 		-30dBm
-		attenuation 	auto
-		rbw				10kHz
-		vbw				10kHz
+		attenuation 		auto
+		rbw			10kHz
+		vbw			10kHz
 		sweep time		100msec
 		
 ********FOLLOWING NOT ENOUGH EXPERIENCE TO JUDGE IF CORRECT*********************
