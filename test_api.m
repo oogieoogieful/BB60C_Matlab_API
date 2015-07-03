@@ -1,6 +1,6 @@
 function test_api
-% We are creating nested-functions to configure,fetch,process and
-% compress power data from Signal Hound BB60C Spectrum Analyzer/RF Recorder
+% We are creating nested-functions to configure sweep moode, fetch, process
+% and compress power data from Signal Hound BB60C Spectrum Analyzer
 % 	3.0 USB on 64-bit Window 7 computer
 % 	86 BB API Version 3.0.4 (included with Spike 64 bit 3.0.8 download)
 % 	32-bit Matlab
