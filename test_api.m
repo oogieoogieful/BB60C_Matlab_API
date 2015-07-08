@@ -42,28 +42,34 @@ query_trace;
 
 % Data Aquisition
 sweep_num=1;% number of sweeps
-time_stamps=zeros(sweep_num,6);
+time_stamps=zeros(sweep_num,6);% clock v. tic & toc
 maxPtr=fetch_trace;
 
-% Signal Processing - see processing_vars.m
-FLT201_fm_filter=cell(1,traceLenPtr.Value);% dBm
+% Signal Processing Variables - see processing_vars.m
+FLT201_fm_filter=cell(1,401408);% dBm
 harmonic_idx=cell(1,78);
 bb60c_harmonics=cell(1,78);%mW
+
+% fm notch
+% LNA pre-amp
+
 load('processing_vars.mat');
+
 % Remove BB60C Signal Hound harmonics & FLT201A/N FM notch attenuation
 max_vec=process;
 
 % collect several sweeps
 
-% Find std & mean (linear NOT log operations)
-% leave processed max_vec linear
-% compress;
+% Stats, find max, std & mean (linear NOT log operations) for 45 secs.
+
+% Keep data linear?
 
 % Plot
 start=startPtr.Value; %Hz
 stop=start+span; %Hz
 freq_bins=traceLenPtr.Value;
-freq_vec=linspace(start,stop,freq_bins);
+freq_vec=linspace(start,stop,freq_bins);% Hz
+plot_capture;
 
 close_test;
 
@@ -126,5 +132,19 @@ close_test;
         max_vec = 10.^ max_vec;
         % Remove BB60C Device Harmonics
         max_vec(harmonic_idx)=max_vec(harmonic_idx)-bb60c_harmonics;
+    end
+    function plot_capture
+        % Convert from Log to Linear
+        max_vec_log=-abs(10.*log10(max_vec)); %losing precision when convert?
+        figure(1)
+        plot(freq_vec/1e6,max_vec_log,'b')
+        %plot(freq_vec/1e6,mean(mean_mat_log),'m')
+        %plot(freq_vec,max(mean_mat_log),'k')
+        axis([0 1000 -100 0])
+        xlabel('Frequency [MHz]')
+        ylabel('Power [dBm]')
+        title(time_stamp)
+        legend('Max of Max Trace of 15 sec period for 30 min. recording','Mean of 30 min. recording','Max of Mean')
+        hold off;
     end
 end
