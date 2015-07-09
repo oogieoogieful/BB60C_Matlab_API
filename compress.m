@@ -9,24 +9,24 @@ load('processing_data.mat');
 % While Conditions
 minutes_sample = .75;% mins. which are compressed (approx.)<--test 0.5 or 1min
 samples = minutes_sample * 60 * 4; %innermost loop takes ~1/4 second <-- restest this
-minutes_saved = 30;% minutes which are saved (approx.)
+minutes_saved = 3;% minutes which are saved (approx.)
 samples_capture = minutes_saved/minutes_sample;
-times_run =4;% times_run*minutes_capture=whole recording length (approx.)
+times_run =1;% times_run*minutes_capture=whole recording length (approx.)
 times = 0;
 
 % Single Capture 
-min_ptr=libpointer('doublePtr',zeros(1,traceLen_ptr.Value));
-max_ptr=libpointer('doublePtr',zeros(1,traceLen_ptr.Value));
+min_ptr=libpointer('doublePtr',zeros(1,traceLenPtr.Value));
+max_ptr=libpointer('doublePtr',zeros(1,traceLenPtr.Value));
 
 % Matrices without Compression
-mat_max_sample=zeros(samples,traceLen_ptr.Value);
-%mat_min_sample=zeros(samples,traceLen_ptr.Value);
+mat_max_sample=zeros(samples,traceLenPtr.Value);
+%mat_min_sample=zeros(samples,traceLenPtr.Value);
 
 % Compress Matrices for Whole Recording
-max_mat  = zeros(samples_capture,traceLen_ptr.Value);
-std_mat  = zeros(samples_capture,traceLen_ptr.Value);
-mean_mat = zeros(samples_capture,traceLen_ptr.Value);
-%min_mat  = zeros(samples_capture,traceLen_ptr.Value);
+max_mat  = zeros(samples_capture,traceLenPtr.Value);
+std_mat  = zeros(samples_capture,traceLenPtr.Value);
+mean_mat = zeros(samples_capture,traceLenPtr.Value);
+%min_mat  = zeros(samples_capture,traceLenPtr.Value);
 
 % Time Stamp
 %time_vec=char(zeros(samples_capture,23));%<---Test this to replace
@@ -44,7 +44,7 @@ while times < times_run
         elapsed_time_sample = tic;
         while count < samples + 1
             % Sweep for Max & Min trace
-            trace=calllib('bb_api','bbFetchTrace',device_ptr.Value,traceLen_ptr.Value,min_ptr,max_ptr);
+            trace=calllib('bb_api','bbFetchTrace',devicePtr.Value,traceLenPtr.Value,min_ptr,max_ptr);
             % Process Power Measurements
             % Reverse Effects of FLT201A/N FM Notch Filter
             max_vec = max_ptr.Value+power_filter;
@@ -61,7 +61,7 @@ while times < times_run
             %mat_min_sample(count,:)= min_vec;
             
             % Re-Calibrate Device to current temp. 
-            state=calllib('bb_api','bbInitiate',device_ptr.Value,BB_SWEEPING,flag);
+            state=calllib('bb_api','bbInitiate',devicePtr.Value,BB_SWEEPING,flag);
             count = count + 1;
         end
         % Compress each sample
@@ -71,8 +71,8 @@ while times < times_run
         %min_vec = min(mat_min_sample);%dBm
         
         % Re-intialize Vars
-        mat_max_sample=zeros(samples,traceLen_ptr.Value); %<-- test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        %mat_min_sample=zeros(samples,traceLen_ptr.Value);
+        mat_max_sample=zeros(samples,traceLenPtr.Value); %<-- test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        %mat_min_sample=zeros(samples,traceLenPtr.Value);
         
         % Time Stamp each compression
         sample_time=[sample_time;datestr(now,'dd-mm-yyyy HH:MM:SS FFF')];%?????????????????????
