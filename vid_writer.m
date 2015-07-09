@@ -15,7 +15,7 @@ minutes_saved=30; %make this more general
 minutes_sample=0.25;% make this more general
 sec_sample=minutes_sample*60;
 
-num_frame=length(sample_time);
+num_frame=length(sample_time(:,1));
 
 % Create movie with recording
 figure(1);
@@ -28,7 +28,7 @@ set(gcf,'Renderer','zbuffer');
 %frame=zeros(num_frame,1);
  for i=1:num_frame
      plot(freq_vec,max_mat_log(i,:),'b',freq_vec,mean_mat_log(i,:),'m')
-     axis([0 1000 -100 0])
+     axis([0 1000 -105 0])
      xlabel('Frequency [MHz]')
      ylabel('Power [dBm]')
      title(filename)
