@@ -20,7 +20,7 @@ figure(1)
 imagesc(freq_vec/1e6,1:minutes_saved,max_mat_log)
 xlabel('Frequency [MHz]')
 ylabel('Time [Minutes]')
-title(time_stamp)
+title('Power in each Frequency Bin over Time')
 cmin=-90;%dBm
 cmax=-40;%dBm
 caxis([cmin cmax])
@@ -33,12 +33,12 @@ figure(2)
 hold on;
 plot(freq_vec/1e6,max(max_mat_log),'b')
 plot(freq_vec/1e6,mean(mean_mat_log),'m')
-%plot(freq_vec,max(mean_mat_log),'k')
 axis([0 1000 -105 0])
 xlabel('Frequency [MHz]')
 ylabel('Power [dBm]')
-title(time_stamp)
-legend('Max ...','Mean ...','Max of Mean')
+title('Single Frame Summary of Whole Recording')
+legend('Max Values','Mean Values')
 hold off;
 
-% histogram
+% histogram for each freq. bin or box plot?
+%figure(3)

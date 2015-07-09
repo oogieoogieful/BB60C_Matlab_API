@@ -13,7 +13,7 @@ std_mat_log=-abs(10.*log10(std_mat));
 
 % Create movie with recording
 figure(1);
-vidObj=VideoWriter('signal.avi');
+vidObj=VideoWriter('recording.avi');
 vidObj.FrameRate=samples_capture/100;
 
 open(vidObj);
@@ -26,7 +26,7 @@ set(gcf,'Renderer','zbuffer');
      xlabel('Frequency [MHz]')
      ylabel('Power [dBm]')
      title(time_stamp)
-     legend('Max ...','Mean ...')
+     legend('Max','Mean')
      frame=getframe(gcf);
      writeVideo(vidObj,frame);
  end
