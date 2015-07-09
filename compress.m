@@ -9,9 +9,9 @@ load('processing_data.mat');
 % While Conditions
 minutes_sample = .75;% mins. which are compressed (approx.)<--test 0.5 or 1min
 samples = minutes_sample * 60 * 4; %innermost loop takes ~1/4 second <-- restest this
-minutes_saved = 3;% minutes which are saved (approx.)
+minutes_saved = 30;% minutes which are saved (approx.)
 samples_capture = minutes_saved/minutes_sample;
-times_run =1;% times_run*minutes_capture=whole recording length (approx.)
+times_run =2;% times_run*minutes_capture=whole recording length (approx.)
 times = 0;
 
 % Single Capture 
