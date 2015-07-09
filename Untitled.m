@@ -1,2 +1,0 @@
-% testing Git
-% for real
