@@ -13,7 +13,7 @@
 %    c. convert harmonic peak power to linear
 % 2. Transfer function of FLT201A/N FM Notch filter [dBm]
 % 3. Transfer function of LNA, Com-Power Pre-Amp PAM-103
-% 4. Transfer finction of antenna, Com-Power 
+% 4. Transfer function of antenna, Com-Power Combilog AC-220 
 clear;clc;close all;
 
 % bb60c_harmonics returns linear peaks of BB60C Signal Hound Harmonic
