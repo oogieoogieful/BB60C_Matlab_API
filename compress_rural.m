@@ -47,9 +47,12 @@ while times < times_run
             trace=calllib('bb_api','bbFetchTrace',devicePtr.Value,traceLenPtr.Value,min_ptr,max_ptr);
             % Process Power Measurements
             % Reverse Effects of FLT201A/N FM Notch Filter
-            max_vec = max_ptr.Value+power_filter;
-            %min_vec = min_ptr.Value+power_filter;
-            
+            max_vec = max_ptr.Value+FLT201_fm_filter;
+             max_vec=max_vec+FLT201_fm_filter;
+            % LAN - pre-amp
+             max_vec=max_vec+LNA_pam103;
+            % Antenna
+            max_vec=max_vec+combilog_AC_220;
             % Convert to Linear
             max_vec = max_vec./10;
             max_vec = 10.^ max_vec;
