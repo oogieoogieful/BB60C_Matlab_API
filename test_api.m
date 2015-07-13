@@ -1,4 +1,4 @@
-function [message]=test_api
+function [message]=test_api_urban
 % We are creating nested-functions to configure sweep mode, fetch, process
 % and compress power data from Signal Hound BB60C Spectrum Analyzer
 % 	3.0 USB on 64-bit Window 7 computer
@@ -125,7 +125,7 @@ close_test;
         time_stamps(1,:)=clock;
     end
     function max_vec = process
-        % Reverse filter effects
+        % Reverse filter effects - Urban
         max_vec = maxPtr.Value+FLT201_fm_filter;
         % Convert to Linear
         max_vec = max_vec./10;
