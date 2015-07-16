@@ -12,7 +12,6 @@ samples = minutes_sample * 60 * 4; %innermost loop takes ~1/4 second <-- restest
 minutes_saved = 30;% minutes which are saved (approx.)
 samples_capture = minutes_saved/minutes_sample;
 times_run =2;% times_run*minutes_capture=whole recording length (approx.)
-times = 0;
 
 % Single Capture 
 min_ptr=libpointer('doublePtr',zeros(1,traceLenPtr.Value));
@@ -52,9 +51,7 @@ while times < times_run
             % LNA Pre-amp
             max_vec=max_vec-LNA_pam103;
             % Antenna
-            max_vec=max_vec+combilog_AC_220;
-            %min_vec = min_ptr.Value+power_filter;
-            
+            max_vec=max_vec+combilog_AC_220      
             % Convert to Linear
             max_vec = max_vec./10;
             max_vec = 10.^ max_vec;
@@ -73,7 +70,7 @@ while times < times_run
         max_vec = max(mat_max_sample);%mW
         std_vec = std(mat_max_sample); %mW
         mean_vec = mean(mat_max_sample); %mW
-        %min_veca = min(mat_min_sample);%dBm
+        %min_vec = min(mat_min_sample);%dBm
         
         % Re-intialize Vars
         mat_max_sample=zeros(samples,traceLenPtr.Value); %<-- test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
